@@ -39,18 +39,39 @@
  */
 #}
 
-{% if promoted %}
-<div class="services--business services--list-block mb-5 col-12">
-	<h2>
-		<a href="{{ field_link }}">{{ content.localgov_ia_block_title }}</a>
-	</h2>
-	{{ list }}
+{% 
+  set classes = [
+    'ia-block',
+    promoted ? 'ia-block--promoted'
+  ]
+%}
+
+<div{{ attributes.addClass(classes)}}>
+	{# Check if we have a title so we don't print an empty H2 #}
+  {% if paragraph.localgov_ia_block_title.value %}
+    <h2 class="ia-block__title">
+			{# Don't print a anchor tag unless the title is linked #}
+    {% if field_link %}
+      <a class="ia-block__title-link" href="{{ field_link }}">{{ content.localgov_ia_block_title }}</a>
+    {% else %}
+      {{ content.localgov_ia_block_title }}
+    {% endif %}
+    </h2>
+  {% endif %}
+
+	{# 
+		Render the list of links 
+		- this variable is created in localgov_homepage_paragraphs.module 
+	#}
+  {{ list }}
+
 </div>
-{% else %}
-<div class="services--list-block mt-4 col-sm-6 col-md-4">
-	<h2>
-		<a href="{{ field_link }}">{{ content.localgov_ia_block_title }}</a>
-	</h2>
-	{{ list }}
-</div>
-{% endif %}
+
+{% block content_variable %}
+  {#
+    This allows the cache_context to bubble up for us, without having to
+    individually list every field in
+    {{ content|without('field_name', 'field_other_field', 'field_etc') }}
+  #}
+  {% set catch_cache = content|render %}
+{% endblock %}
