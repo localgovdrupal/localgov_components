@@ -60,6 +60,8 @@
 
           // Add show/hide button to each accordion title.
           button.appendChild(text);
+          // Add an initially hidden icon which can be used if required to make accordions fit GDS standard
+          button.innerHTML += "<span class='accordion-icon' aria-hidden='true'></span>";
           button.setAttribute('aria-expanded', 'false');
           button.setAttribute('aria-controls', id);
 

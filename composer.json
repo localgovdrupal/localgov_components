@@ -7,7 +7,7 @@
     "minimum-stability": "dev",
     "require": {
         "cweagans/composer-patches": "^1.6",
-        "drupal/address": "^1.8",
+        "drupal/address": "^1.8 || ^2.0",
         "drupal/crop": "^2.1",
         "drupal/entity_browser": "^2.5",
         "drupal/entity_usage": "^2.0@beta",
