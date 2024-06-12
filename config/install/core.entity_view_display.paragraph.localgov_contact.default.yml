@@ -177,6 +177,19 @@ content:
               settings:
                 label: Address
                 description: 'Enter an address to be localized.'
+                autocomplete_min_length: 1
+                component_restrictions:
+                  route: ''
+                  country: ''
+                  administrative_area: ''
+                  locality: ''
+                  postal_code: ''
+                boundary_restriction:
+                  south: ''
+                  west: ''
+                  north: ''
+                  east: ''
+                region: ''
             enabled: false
           leaflet_control_locate:
             weight: 0
@@ -599,7 +612,7 @@ content:
               transparent: false
               identify: false
             enabled: false
-        zoom: '13'
+        zoom: '10'
         height: 400px
         width: 100%
         minZoom: '0'
@@ -638,9 +651,7 @@ content:
         touchZoom: true
         bounceAtZoomLimits: true
       data_provider_settings: {  }
-    third_party_settings:
-      field_formatter_class:
-        class: ''
+    third_party_settings: {  }
     weight: 15
     region: content
   localgov_contact_minicom:
