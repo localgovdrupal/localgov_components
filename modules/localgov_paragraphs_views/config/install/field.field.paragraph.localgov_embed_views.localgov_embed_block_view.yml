@@ -25,5 +25,5 @@ settings:
     block: block
   preselect_views: {  }
   enabled_settings:
-    limit: 1
+    limit: '1'
 field_type: viewsreference
