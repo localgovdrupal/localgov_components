@@ -238,7 +238,7 @@ function localgov_subsites_paragraphs_preprocess_paragraph(&$variables) {
 function _localgov_subsites_paragraphs_create_heading(string $heading_text, string $heading_level) {
   $allowed_heading_levels = ['h2', 'h3', 'h4', 'h5', 'h6'];
 
-  if (!in_array($heading_level, $allowed_heading_levels)) {
+  if (!in_array($heading_level, $allowed_heading_levels, TRUE)) {
     return;
   }
 
