@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Link;
+use Drupal\Core\StringTranslation\ByteSizeMarkup;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\image\Entity\ImageStyle;
@@ -208,9 +209,7 @@ function localgov_subsites_paragraphs_preprocess_paragraph(&$variables) {
       if ($file_entity) {
         $variables['documents'][$key] = [
           'name' => $variables['content']['localgov_documents'][$key],
-          // FIXME: Replace with ByteSizeMarkup when Drupal 10.1 is end of life.
-          // @phpstan-ignore-next-line.
-          'size' => format_size($file_entity->getSize()),
+          'size' => ByteSizeMarkup::create($file_entity->getSize()),
         ];
       }
     }
@@ -238,7 +237,7 @@ function localgov_subsites_paragraphs_preprocess_paragraph(&$variables) {
 function _localgov_subsites_paragraphs_create_heading(string $heading_text, string $heading_level) {
   $allowed_heading_levels = ['h2', 'h3', 'h4', 'h5', 'h6'];
 
-  if (!in_array($heading_level, $allowed_heading_levels)) {
+  if (!in_array($heading_level, $allowed_heading_levels, TRUE)) {
     return;
   }
 
