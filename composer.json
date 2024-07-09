@@ -7,7 +7,7 @@
     "minimum-stability": "dev",
     "require": {
         "cweagans/composer-patches": "^1.6",
-        "drupal/address": "^1.8",
+        "drupal/address": "^1.8 || ^2.0",
         "drupal/crop": "^2.1",
         "drupal/entity_browser": "^2.5",
         "drupal/entity_usage": "^2.0@beta",
@@ -33,8 +33,8 @@
             "drupal/geolocation": {
                 "Fix schema #3138668": "https://www.drupal.org/files/issues/2021-01-27/geolocation-google-maps-schema-update-3138668-5.patch"
             },
-            "drupal/viewsreference": {
-                "Fix schema #2957529": "https://www.drupal.org/files/issues/2022-07-06/viewsreference_schema-2957529-13.patch"
+            "drupal/tablefield": {
+                "Fix PHP8.2 deprecation in Drupal tablefield, see https://www.drupal.org/project/tablefield/issues/3397688.": "https://www.drupal.org/files/issues/2023-12-21/tablefield-php8.2-deprecated-creation-of-dynamic-properties-3397688-9.patch"
             }
         }
     }

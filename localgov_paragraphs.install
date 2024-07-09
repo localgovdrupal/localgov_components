@@ -5,7 +5,13 @@
  * Update hooks.
  */
 
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Utility\UpdateException;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\paragraphs\Entity\ParagraphsType;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Implements hook_update_N().
@@ -73,4 +79,34 @@ function localgov_paragraphs_update_9003() {
   \Drupal::entityTypeManager()->getStorage('field_storage_config')
     ->load('paragraph.localgov_contact_office_hours')
     ->save();
+}
+
+/**
+ * Install the localgov_numbered_text paragraph type if it's not installed.
+ */
+function localgov_paragraphs_update_9004() {
+
+  if (ParagraphsType::load('localgov_numbered_text')) {
+    return 'localgov_numbered_text is already installed';
+  }
+
+  $modulePath = \Drupal::service('extension.list.module')->getPath('localgov_paragraphs');
+
+  $paragraphTypeConfig = Yaml::parseFile($modulePath . '/config/install/paragraphs.paragraphs_type.localgov_numbered_text.yml');
+  ParagraphsType::create($paragraphTypeConfig)->save();
+
+  $numberFieldStorageConfig = Yaml::parseFile($modulePath . '/config/install/field.storage.paragraph.localgov_numbered_text_number.yml');
+  FieldStorageConfig::create($numberFieldStorageConfig)->save();
+
+  $textFieldConfig = Yaml::parseFile($modulePath . '/config/install/field.field.paragraph.localgov_numbered_text.localgov_text.yml');
+  FieldConfig::create($textFieldConfig)->save();
+
+  $numberFieldConfig = Yaml::parseFile($modulePath . '/config/install/field.field.paragraph.localgov_numbered_text.localgov_numbered_text_number.yml');
+  FieldConfig::create($numberFieldConfig)->save();
+
+  $entityViewDisplayConfig = Yaml::parseFile($modulePath . '/config/install/core.entity_view_display.paragraph.localgov_numbered_text.default.yml');
+  EntityViewDisplay::create($entityViewDisplayConfig)->save();
+
+  $entityFormDisplayConfig = Yaml::parseFile($modulePath . '/config/install/core.entity_form_display.paragraph.localgov_numbered_text.default.yml');
+  EntityFormDisplay::create($entityFormDisplayConfig)->save();
 }
