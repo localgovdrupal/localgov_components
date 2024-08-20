@@ -14,13 +14,13 @@
         "drupal/field_formatter_class": "^1.4",
         "drupal/field_group": "^3.0",
         "drupal/fontawesome": "^2.18",
-        "drupal/geolocation": "^3.1",
         "drupal/layout_paragraphs": "^2.0",
         "drupal/office_hours": "^1.8",
         "drupal/paragraphs": "^1.13",
         "drupal/tablefield": "^2.3",
         "drupal/viewsreference": "^2.0",
         "localgovdrupal/localgov_core": "^2.12",
+        "localgovdrupal/localgov_geo": "^2.0",
         "localgovdrupal/localgov_topics": "^1.0"
     },
     "extra": {

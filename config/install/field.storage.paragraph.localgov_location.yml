@@ -2,14 +2,15 @@ langcode: en
 status: true
 dependencies:
   module:
-    - geolocation
+    - geo_entity
     - paragraphs
-id: paragraph.localgov_contact_location
-field_name: localgov_contact_location
+id: paragraph.localgov_location
+field_name: localgov_location
 entity_type: paragraph
-type: geolocation
-settings: {  }
-module: geolocation
+type: entity_reference
+settings:
+  target_type: geo_entity
+module: core
 locked: false
 cardinality: 1
 translatable: true
