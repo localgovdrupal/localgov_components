@@ -8,7 +8,10 @@
 /**
  * Implements hook_install().
  */
-function localgov_homepage_paragraphs_install() {
+function localgov_homepage_paragraphs_install($is_syncing) {
+  if ($is_syncing) {
+    return;
+  }
 
   // Homepage paragraphs depend on the Fontawesome module which breaks the
   // display of localgov_theme icons unless configured to to use webfonts.
