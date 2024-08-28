@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * Update hooks.
+ */
+
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_update_N().
+ */
+function localgov_subsites_paragraphs_update_10001() {
+  $modulePath = \Drupal::service('extension.list.module')->getPath('localgov_subsites_paragraphs');
+  $paragraphType = 'localgov_accordion';
+  $display = 'paragraph.' . $paragraphType . '.default';
+  $fieldNames = [
+    'localgov_display_show_hide_all',
+    'localgov_allow_multiple_open',
+  ];
+
+  $viewDisplay = EntityViewDisplay::load($display);
+  $formDisplay = EntityFormDisplay::load($display);
+
+  foreach ($fieldNames as $fieldName) {
+    // Field Storage.
+    $fieldStorageConfig = Yaml::parseFile($modulePath . '/config/install/field.storage.paragraph.' . $fieldName . '.yml');
+    FieldStorageConfig::create($fieldStorageConfig)->save();
+
+    // Field Config.
+    $fieldConfig = Yaml::parseFile($modulePath . '/config/install/field.field.paragraph.' . $paragraphType . '.' . $fieldName . '.yml');
+    FieldConfig::create($fieldConfig)->save();
+
+    // View Display.
+    if ($viewDisplay) {
+      $dependencies = $viewDisplay->getDependencies()['config'];
+      $dependency = 'field.field.paragraph.localgov_accordion.' . $fieldName;
+
+      if (!in_array($dependency, $dependencies)) {
+        $dependencies[] = $dependency;
+      }
+
+      $viewDisplay->set('dependencies', ['config' => $dependencies]);
+      $viewDisplay->removeComponent($fieldName);
+      $viewDisplay->save();
+    }
+
+    // Form Display.
+    if ($formDisplay) {
+      $dependencies = $formDisplay->getDependencies()['config'];
+      $dependency = 'field.field.paragraph.localgov_accordion.' . $fieldName;
+
+      if (!in_array($dependency, $dependencies)) {
+        $dependencies[] = $dependency;
+        $formDisplay->setComponent($fieldName, [
+          'type' => 'boolean_checkbox',
+          'region' => 'content',
+          'settings' => ['display_label' => TRUE],
+        ]);
+      }
+
+      $formDisplay->set('dependencies', ['config' => $dependencies]);
+      $formDisplay->save();
+    }
+  }
+}
