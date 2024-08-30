@@ -28,14 +28,57 @@
      *   Accordion element index.
      */
     init: function init(accordion, index) {
+      /**
+       * Expands one accordion pane, setting aria-expanded on button.
+       *
+       * @param {HTMLElement} button
+       *   The button associated with the pane to expand.
+       * @param {HTMLElement} pane
+       *   The pane to expand.
+       */
       function expandPane(button, pane) {
         button.setAttribute('aria-expanded', 'true');
         pane.classList.add(openClass);
       }
 
+      /**
+       * Collapses one accordion pane, setting aria-expanded on button.
+       *
+       * @param {HTMLElement} button
+       *   The button associated with the pane to collapse.
+       * @param {HTMLElement} pane
+       *   The pane to collapse.
+       */
       function collapsePane(button, pane) {
         button.setAttribute('aria-expanded', 'false');
         pane.classList.remove(openClass);
+      }
+
+      /**
+       * Toggles all accordion panes open or closed.
+       *
+       * @param {Event} event
+       *   The event object passed in by the event listener.
+       */
+      function toggleAll(event) {
+        const { currentTarget: button } = event;
+        const labelEl = button.querySelector('.accordion-text');
+        const nextState = button.getAttribute('aria-expanded') !== 'true';
+
+        button.textContent = button.dataset[nextState ? 'hideAll' : 'showAll'];
+        button.setAttribute('aria-expanded', nextState);
+
+        for (let i = 0; i < numberOfPanes; i++) {
+          const currentButton = accordionPanes[i].querySelector('[aria-controls]');
+          const currentPane = accordionPanes[i].querySelector('.accordion-pane__content');
+
+          if (nextState) {
+            expandPane(currentButton, currentPane);
+
+          } else {
+            collapsePane(currentButton, currentPane);
+          }
+        }
       }
 
       const accordionPanes = accordion.querySelectorAll('.accordion-pane');
@@ -44,7 +87,9 @@
       const openClass = 'accordion-pane__content--open';
       const breakpoint = accordion.dataset.accordionTabsSwitch || null;
       const mq = window.matchMedia(`(max-width: '${breakpoint}')`);
-      const allowMultiple = accordion.hasAttribute('data-accordion-allow-multiple');
+      const displayShowHide = accordion.hasAttribute('data-accordion-display-show-hide');
+      const allowMultiple = displayShowHide || accordion.hasAttribute('data-accordion-allow-multiple');
+      let showHideButton;
 
       const create = function create() {
         // Only initialise accordion if it hasn't already been done.
@@ -103,6 +148,12 @@
           title[0].children[0].appendChild(button);
         }
 
+        if (displayShowHide) {
+          showHideButton = accordion.querySelector('.accordion-toggle-all');
+          showHideButton.hidden = false;
+          showHideButton.addEventListener('click', toggleAll);
+        }
+
         // Add init class.
         accordion.classList.add(initClass);
       };
@@ -133,6 +184,12 @@
               .classList.remove(openClass);
           }
         }
+
+        if (displayShowHide) {
+          showHideButton.hidden = true;
+          showHideButton.removeEventListener('click', toggleAll);
+        }
+
         // Remove accordion init class.
         accordion.classList.remove(initClass);
       };
