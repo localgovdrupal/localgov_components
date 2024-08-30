@@ -19,5 +19,9 @@
 /* initial hide of icon within the button, retain pointer events setting if used */
 .accordion-icon {
   display: none;
-  pointer-events: none; 
+  pointer-events: none;
+}
+
+.accordion-toggle-all {
+  margin-bottom: var(--vertical-rhythm-spacing);
 }
