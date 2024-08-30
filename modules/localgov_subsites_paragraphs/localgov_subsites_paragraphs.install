@@ -40,7 +40,7 @@ function localgov_subsites_paragraphs_update_10001() {
       $dependencies = $viewDisplay->getDependencies()['config'];
       $dependency = 'field.field.paragraph.localgov_accordion.' . $fieldName;
 
-      if (!in_array($dependency, $dependencies)) {
+      if (!in_array($dependency, $dependencies, TRUE)) {
         $dependencies[] = $dependency;
       }
 
@@ -54,7 +54,7 @@ function localgov_subsites_paragraphs_update_10001() {
       $dependencies = $formDisplay->getDependencies()['config'];
       $dependency = 'field.field.paragraph.localgov_accordion.' . $fieldName;
 
-      if (!in_array($dependency, $dependencies)) {
+      if (!in_array($dependency, $dependencies, TRUE)) {
         $dependencies[] = $dependency;
         $formDisplay->setComponent($fieldName, [
           'type' => 'boolean_checkbox',
