@@ -49,12 +49,28 @@
   ]
 %}
 
+{% if paragraph.localgov_allow_multiple_open.value == 1 %}
+  {% set attributes = attributes.setAttribute('data-accordion-allow-multiple', '') %}
+{% elseif paragraph.localgov_display_show_hide_all.value == 1 %}
+  {% set attributes = attributes.setAttribute('data-accordion-display-show-hide', '') %}
+{% endif %}
+
 {{ attach_library('localgov_subsites_paragraphs/localgov_accordion') }}
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
       {{ heading }}
+      {% if paragraph.localgov_display_show_hide_all.value == 1 %}
+        {% set show_all = 'Show all sections'|t %}
+        {% set hide_all = 'Hide all sections'|t %}
+        <button type="button" class="accordion-toggle-all" aria-expanded="false" data-show-all="{{ show_all }}" data-hide-all="{{ hide_all }}" hidden>
+          <span class="accordion-icon" aria-hidden="true"></span>
+          <span class="accordion-text">
+            {{ show_all }}
+          </span>
+        </button>
+      {% endif %}
       {{ content.localgov_paragraphs }}
     {% endblock %}
   </div>
