@@ -44,6 +44,7 @@
       const openClass = 'accordion-pane__content--open';
       const breakpoint = accordion.dataset.accordionTabsSwitch || null;
       const mq = window.matchMedia(`(max-width: '${breakpoint}')`);
+      const allowMultiple = accordion.hasAttribute('data-accordion-allow-multiple');
 
       const create = function create() {
         // Only initialise accordion if it hasn't already been done.
@@ -79,7 +80,7 @@
             // Check the current state of the button and the content it controls.
             if (e.target.getAttribute('aria-expanded') === 'false') {
               // Close currently open pane.
-              if (openPane.length) {
+              if (openPane.length && !allowMultiple) {
                 const openPaneId = openPane[0].getAttribute('id');
                 const openPaneButton = accordion.querySelectorAll(
                   `[aria-controls="${openPaneId}"]`,
