@@ -9,7 +9,7 @@ field_name: localgov_display_show_hide_all
 entity_type: paragraph
 bundle: localgov_accordion
 label: 'Display show/hide all toggle'
-description: 'When checked, the resulting accordion will include a button allowing all panes to be open or closed at once.'
+description: 'When checked, the resulting accordion will include a button allowing all panes to be open or closed at once. Note that this automatically enables the option to open multiple panes at once.'
 required: false
 translatable: false
 default_value: {  }
