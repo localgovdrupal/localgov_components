@@ -28,6 +28,16 @@
      *   Accordion element index.
      */
     init: function init(accordion, index) {
+      function expandPane(button, pane) {
+        button.setAttribute('aria-expanded', 'true');
+        pane.classList.add(openClass);
+      }
+
+      function collapsePane(button, pane) {
+        button.setAttribute('aria-expanded', 'false');
+        pane.classList.remove(openClass);
+      }
+
       const accordionPanes = accordion.querySelectorAll('.accordion-pane');
       const numberOfPanes = accordionPanes.length;
       const initClass = 'accordion--initialised';
@@ -74,17 +84,16 @@
                 const openPaneButton = accordion.querySelectorAll(
                   `[aria-controls="${openPaneId}"]`,
                 );
-                openPane[0].classList.remove(openClass);
-                openPaneButton[0].setAttribute('aria-expanded', 'false');
+
+                collapsePane(openPaneButton[0], openPane[0]);
               }
 
               // Show new pane.
-              e.target.setAttribute('aria-expanded', 'true');
-              targetPane[0].classList.add(openClass);
+              expandPane(e.target, targetPane[0]);
             } else {
+
               // If target pane is currently open, close it.
-              e.target.setAttribute('aria-expanded', 'false');
-              targetPane[0].classList.remove(openClass);
+              collapsePane(e.target, targetPane[0]);
             }
           });
 
