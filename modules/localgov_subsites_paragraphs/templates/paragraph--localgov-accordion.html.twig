@@ -49,7 +49,7 @@
   ]
 %}
 
-{% if paragraph.localgov_allow_multiple_open.value == 1 %}
+{% if paragraph.localgov_allow_multiple_open.value == 1 and paragraph.localgov_display_show_hide_all.value != 1 %}
   {% set attributes = attributes.setAttribute('data-accordion-allow-multiple', '') %}
 {% elseif paragraph.localgov_display_show_hide_all.value == 1 %}
   {% set attributes = attributes.setAttribute('data-accordion-display-show-hide', '') %}
