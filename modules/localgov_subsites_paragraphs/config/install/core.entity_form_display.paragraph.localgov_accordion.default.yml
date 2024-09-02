@@ -17,27 +17,27 @@ mode: default
 content:
   localgov_allow_multiple_open:
     type: boolean_checkbox
-    weight: 3
+    weight: 2
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   localgov_display_show_hide_all:
     type: boolean_checkbox
-    weight: 4
+    weight: 1
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   localgov_heading_level:
     type: options_select
-    weight: 1
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   localgov_paragraphs:
     type: paragraphs
-    weight: 2
+    weight: 4
     region: content
     settings:
       title: 'Accordion pane'

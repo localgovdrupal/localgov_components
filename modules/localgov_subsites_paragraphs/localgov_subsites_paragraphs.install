@@ -18,52 +18,69 @@ function localgov_subsites_paragraphs_update_10001() {
   $modulePath = \Drupal::service('extension.list.module')->getPath('localgov_subsites_paragraphs');
   $paragraphType = 'localgov_accordion';
   $display = 'paragraph.' . $paragraphType . '.default';
-  $fieldNames = [
-    'localgov_display_show_hide_all',
-    'localgov_allow_multiple_open',
+  $existingFields = [
+    'localgov_heading_level' => 3,
+    'localgov_paragraphs' => 4,
+    'localgov_title' => 0,
+  ];
+  $newFields = [
+    'localgov_display_show_hide_all' => 1,
+    'localgov_allow_multiple_open' => 2,
   ];
 
   $viewDisplay = EntityViewDisplay::load($display);
   $formDisplay = EntityFormDisplay::load($display);
 
-  foreach ($fieldNames as $fieldName) {
-    // Field Storage.
-    $fieldStorageConfig = Yaml::parseFile($modulePath . '/config/install/field.storage.paragraph.' . $fieldName . '.yml');
-    FieldStorageConfig::create($fieldStorageConfig)->save();
+  // Add new fields.
+  foreach (array_merge($existingFields, $newFields) as $fieldName => $weight) {
 
-    // Field Config.
-    $fieldConfig = Yaml::parseFile($modulePath . '/config/install/field.field.paragraph.' . $paragraphType . '.' . $fieldName . '.yml');
-    FieldConfig::create($fieldConfig)->save();
+    if (array_key_exists($fieldName, $newFields)) {
+      // Field Storage.
+      $fieldStorageConfig = Yaml::parseFile($modulePath . '/config/install/field.storage.paragraph.' . $fieldName . '.yml');
+      FieldStorageConfig::create($fieldStorageConfig)->save();
 
-    // View Display.
-    if ($viewDisplay) {
-      $dependencies = $viewDisplay->getDependencies()['config'];
-      $dependency = 'field.field.paragraph.localgov_accordion.' . $fieldName;
+      // Field Config.
+      $fieldConfig = Yaml::parseFile($modulePath . '/config/install/field.field.paragraph.' . $paragraphType . '.' . $fieldName . '.yml');
+      FieldConfig::create($fieldConfig)->save();
 
-      if (!in_array($dependency, $dependencies, TRUE)) {
-        $dependencies[] = $dependency;
+      // View Display.
+      if ($viewDisplay) {
+        $dependencies = $viewDisplay->getDependencies()['config'];
+        $dependency = 'field.field.paragraph.localgov_accordion.' . $fieldName;
+
+        if (!in_array($dependency, $dependencies, TRUE)) {
+          $dependencies[] = $dependency;
+        }
+
+        $viewDisplay->set('dependencies', ['config' => $dependencies]);
+        $viewDisplay->removeComponent($fieldName);
+        $viewDisplay->save();
       }
 
-      $viewDisplay->set('dependencies', ['config' => $dependencies]);
-      $viewDisplay->removeComponent($fieldName);
-      $viewDisplay->save();
+      // Form Display.
+      if ($formDisplay) {
+        $dependencies = $formDisplay->getDependencies()['config'];
+        $dependency = 'field.field.paragraph.localgov_accordion.' . $fieldName;
+
+        if (!in_array($dependency, $dependencies, TRUE)) {
+          $dependencies[] = $dependency;
+          $formDisplay->setComponent($fieldName, [
+            'type' => 'boolean_checkbox',
+            'region' => 'content',
+            'settings' => ['display_label' => TRUE],
+          ]);
+        }
+
+        $formDisplay->set('dependencies', ['config' => $dependencies]);
+        $formDisplay->save();
+      }
     }
 
-    // Form Display.
+    // Handle weights of new and existing fields.
     if ($formDisplay) {
-      $dependencies = $formDisplay->getDependencies()['config'];
-      $dependency = 'field.field.paragraph.localgov_accordion.' . $fieldName;
-
-      if (!in_array($dependency, $dependencies, TRUE)) {
-        $dependencies[] = $dependency;
-        $formDisplay->setComponent($fieldName, [
-          'type' => 'boolean_checkbox',
-          'region' => 'content',
-          'settings' => ['display_label' => TRUE],
-        ]);
-      }
-
-      $formDisplay->set('dependencies', ['config' => $dependencies]);
+      $component = $formDisplay->getComponent($fieldName);
+      $component['weight'] = $weight;
+      $formDisplay->setComponent($fieldName, $component);
       $formDisplay->save();
     }
   }
