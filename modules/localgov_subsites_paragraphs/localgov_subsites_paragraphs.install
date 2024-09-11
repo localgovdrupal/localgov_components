@@ -73,13 +73,17 @@ function localgov_subsites_paragraphs_update_10001() {
 
   foreach (array_merge($existingFields, $newFields) as $fieldName => $config) {
     if (array_key_exists($fieldName, $newFields)) {
-      // Field Storage.
-      $fieldStorage = FieldStorageConfig::create($config['field_storage']);
-      $fieldStorage->save();
+      if (!FieldStorageConfig::loadByName('paragraph', $fieldName)) {
+        // Field Storage.
+        $fieldStorage = FieldStorageConfig::create($config['field_storage']);
+        $fieldStorage->save();
+      }
 
-      // Field Config.
-      $fieldConfig = FieldConfig::create($config['field_config']);
-      $fieldConfig->save();
+      if (!FieldConfig::loadByName('paragraph', 'localgov_accordion', $fieldName)) {
+        // Field Config.
+        $fieldConfig = FieldConfig::create($config['field_config']);
+        $fieldConfig->save();
+      }
 
       // View Display.
       if ($viewDisplay) {
@@ -88,11 +92,10 @@ function localgov_subsites_paragraphs_update_10001() {
 
         if (!in_array($dependency, $dependencies, TRUE)) {
           $dependencies[] = $dependency;
+          $viewDisplay->set('dependencies', ['config' => $dependencies]);
+          $viewDisplay->removeComponent($fieldName);
+          $viewDisplay->save();
         }
-
-        $viewDisplay->set('dependencies', ['config' => $dependencies]);
-        $viewDisplay->removeComponent($fieldName);
-        $viewDisplay->save();
       }
 
       // Form Display.
@@ -107,10 +110,9 @@ function localgov_subsites_paragraphs_update_10001() {
             'region' => 'content',
             'settings' => ['display_label' => TRUE],
           ]);
+          $formDisplay->set('dependencies', ['config' => $dependencies]);
+          $formDisplay->save();
         }
-
-        $formDisplay->set('dependencies', ['config' => $dependencies]);
-        $formDisplay->save();
       }
     }
 
