@@ -117,7 +117,7 @@
           const pane = accordionPanes[i];
           const content = pane.querySelectorAll('.accordion-pane__content');
           const title = pane.querySelectorAll('.accordion-pane__title');
-          const button = title.querySelectorAll('button');
+          const button = title[0].querySelector('.accordion-pane-toggle');
           const id = `accordion-content-${index}-${i}`;
 
           // Add id attribute to all pane content elements.
