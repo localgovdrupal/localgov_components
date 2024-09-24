@@ -53,6 +53,7 @@
     {% block content %}
       <div class="accordion-pane__title">
         <{{ heading_level }}>
+          <span class="accordion-pane__heading">{{ heading_text }}</span>
           <button aria-expanded="false" hidden>
             {{ heading_text }}
             <span class='accordion-icon' aria-hidden='true'></span>

@@ -118,14 +118,18 @@
           const content = pane.querySelectorAll('.accordion-pane__content');
           const title = pane.querySelectorAll('.accordion-pane__title');
           const button = title[0].querySelector('button');
+          const heading = title[0].querySelector('.accordion-pane__heading');
           const id = `accordion-content-${index}-${i}`;
 
           // Add id attribute to all pane content elements.
           content[0].setAttribute('id', id);
 
-          // Add aria-controls id to button
-          button.hidden = false;
+          // Add aria-controls id to button and un-hide
           button.setAttribute('aria-controls', id);
+          button.hidden = false;
+
+          // Hide default Heading text
+          heading.hidden = true;
 
           // Add click event listener to the show/hide button.
           button.addEventListener('click', e => {
@@ -186,11 +190,17 @@
           // Remove id attributes from buttons in accordion pane titles.
           const button = accordion
             .querySelectorAll('.accordion-pane__title')[i]
-            .querySelectorAll('button')
+            .querySelector('button')
             .removeAttribute('id');
           
           // Hide buttons in accordion pane titles.
           button.hidden = true;
+
+          // Un-hide default heading text
+          accordion
+            .querySelectorAll('.accordion-pane__title')[i]
+            .querySelector('.accordion-pane__heading')
+            .hidden = false
 
           // Remove id attributes from pane content elements.
           accordionPanes[i]
