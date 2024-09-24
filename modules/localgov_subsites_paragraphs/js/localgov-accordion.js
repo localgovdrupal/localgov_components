@@ -124,6 +124,7 @@
           content[0].setAttribute('id', id);
 
           // Add aria-controls id to button
+          button.hidden = false;
           button.setAttribute('aria-controls', id);
 
           // Add click event listener to the show/hide button.
@@ -182,13 +183,14 @@
 
       const destroy = () => {
         for (let i = 0; i < numberOfPanes; i++) {
-          // Remove buttons from accordion pane titles.
+          // Remove id attributes from buttons in accordion pane titles.
           const button = accordion
-            .querySelectorAll('.accordion-pane__title')
-            [i].querySelectorAll('button');
-          if (button.length > 0) {
-            button[0].outerHTML = button[0].innerHTML;
-          }
+            .querySelectorAll('.accordion-pane__title')[i]
+            .querySelectorAll('button')
+            .removeAttribute('id');
+          
+          // Hide buttons in accordion pane titles.
+          button.hidden = true;
 
           // Remove id attributes from pane content elements.
           accordionPanes[i]
