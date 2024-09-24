@@ -125,9 +125,7 @@
           // Add id attribute to all pane content elements.
           content[0].setAttribute('id', id);
 
-          // Add show/hide button to each accordion title.
-          //button.appendChild(text);
-         // button.setAttribute('aria-expanded', 'false');
+          // Add aria-controls id to button
           button.setAttribute('aria-controls', id);
 
           // Add click event listener to the show/hide button.
