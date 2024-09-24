@@ -8,6 +8,10 @@
   text-align: left;
 }
 
+.accordion-pane__title button[hidden] {
+	display: none;
+}
+
 .accordion--initialised .accordion-pane__content {
   display: none;
 }
