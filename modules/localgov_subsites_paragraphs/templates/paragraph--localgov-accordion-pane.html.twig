@@ -52,7 +52,7 @@
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
       <div class="accordion-pane__title">
-        {{ heading }}
+        <{{ heading_level }}>{{ heading_text }}<span class='accordion-icon' aria-hidden='true'></{{ heading_level }}>
       </div>
       <div class="accordion-pane__content">
         {{ content.localgov_body_text }}
