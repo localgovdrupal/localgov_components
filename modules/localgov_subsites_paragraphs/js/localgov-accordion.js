@@ -117,17 +117,17 @@
           const pane = accordionPanes[i];
           const content = pane.querySelectorAll('.accordion-pane__content');
           const title = pane.querySelectorAll('.accordion-pane__title');
-          const titleText = title[0].textContent;
-          const button = document.createElement('button');
-          const text = document.createTextNode(titleText);
+          //const titleText = title[0].textContent;
+          const button = title.querySelectorAll('button');
+          //const text = document.createTextNode(titleText);
           const id = `accordion-content-${index}-${i}`;
 
           // Add id attribute to all pane content elements.
           content[0].setAttribute('id', id);
 
           // Add show/hide button to each accordion title.
-          button.appendChild(text);
-          button.setAttribute('aria-expanded', 'false');
+          //button.appendChild(text);
+         // button.setAttribute('aria-expanded', 'false');
           button.setAttribute('aria-controls', id);
 
           // Add click event listener to the show/hide button.
