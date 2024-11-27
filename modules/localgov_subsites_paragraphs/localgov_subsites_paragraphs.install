@@ -125,3 +125,16 @@ function localgov_subsites_paragraphs_update_10001() {
     }
   }
 }
+
+/**
+ * Update the description of the localgov_url field.
+ */
+function localgov_subsites_paragraphs_update_10002() {
+  // Update the description of the localgov_url field to match what we have
+  // in config.
+  $field = FieldConfig::loadByName('paragraph', 'localgov_banner_primary', 'localgov_url');
+  if ($field) {
+    $field->setDescription(t('An optional url. Adding a url here will make the banner title a link.'));
+    $field->save();
+  }
+}
