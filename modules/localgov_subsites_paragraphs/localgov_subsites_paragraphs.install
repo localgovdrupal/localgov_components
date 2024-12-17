@@ -13,7 +13,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 /**
  * Implements hook_update_N().
  */
-function localgov_subsites_paragraphs_update_10001() {
+function localgov_subsites_paragraphs_update_10001():void {
   $paragraphType = 'localgov_accordion';
   $display = 'paragraph.' . $paragraphType . '.default';
   $existingFields = [
@@ -123,5 +123,18 @@ function localgov_subsites_paragraphs_update_10001() {
       $formDisplay->setComponent($fieldName, $component);
       $formDisplay->save();
     }
+  }
+}
+
+/**
+ * Update the description of the localgov_url field.
+ */
+function localgov_subsites_paragraphs_update_10002():void {
+  // Update the description of the localgov_url field to match what we have
+  // in config.
+  $field = FieldConfig::loadByName('paragraph', 'localgov_banner_primary', 'localgov_url');
+  if ($field) {
+    $field->setDescription(t('An optional url. Adding a url here will make the banner title a link.'));
+    $field->save();
   }
 }
