@@ -18,12 +18,10 @@ dependencies:
   - entity_browser:entity_browser
   - entity_usage:entity_usage
   - field_group:field_group
-  - geolocation:geolocation
-  - geolocation:geolocation_google_maps
-  - geolocation:geolocation_leaflet
   - office_hours:office_hours
   - paragraphs:paragraphs (>=8.x-1.13)
   - paragraphs:paragraphs_library
   # LocalGovDrupal
   - localgov_core:localgov_media
+  - localgov_geo:localgov_geo_address
   - localgov_topics:localgov_topics

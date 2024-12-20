@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - geo_entity
+id: geo_entity.localgov_paragraph_contact
+label: 'Contact paragraph'
+description: ''
+targetEntityType: geo_entity
+cache: true
