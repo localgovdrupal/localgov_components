@@ -22,7 +22,7 @@ dependencies:
   - geolocation:geolocation_google_maps
   - geolocation:geolocation_leaflet
   - office_hours:office_hours
-  - paragraphs:paragraphs (>=8.x-1.13)
+  - paragraphs:paragraphs
   - paragraphs:paragraphs_library
   # LocalGovDrupal
   - localgov_core:localgov_media
