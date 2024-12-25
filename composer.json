@@ -5,12 +5,6 @@
     "homepage": "https://github.com/localgovdrupal/localgov_paragraphs",
     "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://git.drupalcode.org/issue/fontawesome-3465765.git"
-        }
-    ],
     "require": {
         "cweagans/composer-patches": "^1.6",
         "drupal/address": "^1.8 || ^2.0",
