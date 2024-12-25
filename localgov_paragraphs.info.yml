@@ -2,7 +2,7 @@ name: LocalGov Paragraphs
 description: Provides core paragraph components for the LocalGov Drupal distribution.
 package: LocalGov Drupal
 type: module
-core_version_requirement: ^10.2
+core_version_requirement: ^10.2 || ^11
 
 dependencies:
   # Drupal
@@ -22,7 +22,7 @@ dependencies:
   - geolocation:geolocation_google_maps
   - geolocation:geolocation_leaflet
   - office_hours:office_hours
-  - paragraphs:paragraphs (>=8.x-1.13)
+  - paragraphs:paragraphs
   - paragraphs:paragraphs_library
   # LocalGovDrupal
   - localgov_core:localgov_media
