@@ -5,6 +5,12 @@
     "homepage": "https://github.com/localgovdrupal/localgov_paragraphs",
     "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://git.drupalcode.org/issue/fontawesome-3465765.git"
+        }
+    ],
     "require": {
         "cweagans/composer-patches": "^1.6",
         "drupal/address": "^1.8 || ^2.0",
@@ -13,7 +19,7 @@
         "drupal/entity_usage": "^2.0@beta",
         "drupal/field_formatter_class": "^1.4",
         "drupal/field_group": "^3.0",
-        "drupal/fontawesome": "^2.18",
+        "drupal/fontawesome": "dev-3465765-drupal-11-compatibility",
         "drupal/geolocation": "^3.1",
         "drupal/layout_paragraphs": "^2.0",
         "drupal/office_hours": "^1.8",
