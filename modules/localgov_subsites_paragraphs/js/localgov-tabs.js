@@ -89,8 +89,8 @@
               tab.addEventListener('keydown', function (e) {
                 var newActiveControl = void 0;
 
-                switch (e.which) {
-                  case 37:
+                switch (e.key) {
+                  case 'ArrowLeft':
                     // Left arrow. If there's a previous element, switch to it.
                     if (i - 1 >= 0) {
                       newActiveControl = tabList.querySelectorAll('li')[i - 1].querySelectorAll('button');
@@ -98,7 +98,7 @@
                       newActiveControl[0].focus();
                     }
                     break;
-                  case 39:
+                  case 'ArrowRight':
                     // Right arrow. If there's a next element, switch to it.
                     if (i + 1 < tabPanelsNumber) {
                       newActiveControl = tabList.querySelectorAll('li')[i + 1].querySelectorAll('button');
@@ -106,7 +106,7 @@
                       newActiveControl[0].focus();
                     }
                     break;
-                  case 40:
+                  case 'ArrowDown':
                     // Arrow down. Move focus into the active panel.
                     tabPanels[i].focus();
                     break;
@@ -179,7 +179,7 @@
       // Trigger create/destroy functions at different screen widths
       // based on the value of data-accordion-tabs-switch attribute.
       if (window.matchMedia) {
-        mq.addListener(function () {
+        mq.addEventListener("change", () => {
           breakpointCheck();
         });
         breakpointCheck();
